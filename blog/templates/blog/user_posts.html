@@ -1,0 +1,74 @@
+{% extends "blog/base.html" %}
+{% load static %}
+{% block content %}
+    
+
+    <div id="tech" style="margin-top: 0px">
+        <div class="row">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-7">
+              <div style="text-align: center; margin-bottom: 30px" class="titlefont"><h1 class="mb-3" style="margin-top: 100px">Posts by {{ view.kwargs.username }} ({{ page_obj.paginator.count }})</h1></div>
+              <hr>
+                
+                <div class="mainPage">
+            {% for post in posts %}
+                <div class="row" style="margin: 0px">
+                    <div class="col-sm-12">
+                        <div class="profile-article wall well-sm" style="margin-bottom: 20px">
+                            <div class="card" style="width: 100%; padding: 10px;">
+                                <div class="profile-article-pro">
+                                    <div class="row">
+                                        <div class="col-sm-1" style="float: left; margin-left: 12px">
+                                            <div class="row"><div class="col-sm-20"><img src="{{ post.author.profile.image.url }}" class="img-responsive img-circle" width="100%" height="100%" style="padding: 1px;margin-bottom: 4px"></div></div>
+                                        </div>
+                                        <div class="col-sm-4" style="float: left;">
+                                            <a class="mr-2" href="{% url 'user-posts' post.author.username %}"><h4>{{ post.author }}</h4></a>
+                                            <div style="clear: both;"></div>
+              <small class="text-muted"><h5>{{ post.date_posted|date:"F d, Y" }}</h5></small>                                        </div>
+                                        <div style="clear: both;"></div>
+                                    </div>
+                                </div>
+                                <div class="profile-article-title" >
+                                    <h2><a class="article-title titlefont" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+                                </div>
+                                <img class="card-img-top" src="{{ post.article_img.url }}" alt="Card image cap" width="100%" height="130px">
+                                <div class="card-body" style="margin-top: 20px">
+      
+                                    <h4 class=" text-justify article-content titlefont">{{ post.summary }}</h4>
+                                    <!-- <a href="#" class="btn btn-default">23 Upwork</a>
+ -->                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+            </div>
+            <div class="col-sm-3"></div>
+            <div class="col-sm-1"></div>
+        </div>
+    </div>
+
+
+    {% if is_paginated %}
+
+      {% if page_obj.has_previous %}
+        <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+      {% endif %}
+
+      {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+          <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+          <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+        {% endif %}
+      {% endfor %}
+
+      {% if page_obj.has_next %}
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+      {% endif %}
+
+    {% endif %}
+{% endblock content %}

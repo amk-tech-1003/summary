@@ -1,0 +1,17 @@
+{% extends "blog/base.html" %}
+{% block content %}
+{% load static %}
+	{% for pst in post %}
+		<div class="container" style="margin-top: 150px"><br>
+			<a href="{% url 'post-detail' pst.id %}"><h1 class="text-justify text-center">{{ pst.title }}</h1></a><br>
+			<img src="{{ pst.article_img }}">
+			<h5 class="text-justify">{{ pst.content }}</h5><br><hr>
+			<p class="text-justify">{{ pst.summ }}</p><br>
+		</div>
+	{% endfor %}
+{% endblock content %}
+
+
+
+
+

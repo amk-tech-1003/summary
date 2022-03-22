@@ -1,0 +1,57 @@
+{% extends "blog/base.html" %}
+{% block content %}
+{% load static %}
+
+<article>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-1"></div>
+      <div class="col-lg-10">
+        <div class="post-heading" style="margin-top: 100px;">
+          <h1 class="article-title titlefont h1">{{ object.title }}</h1>
+        </div>
+        <div class="row authorData">
+          <!-- <div class="well well-sm"> -->
+          <div class="col-3">
+            <img src="{{object.author.profile.image.url }}"
+              class="img-responsive img-fluid img-thumbnail " alt="Cinque Terre"
+              style="margin-top: 20px; width: 100%; height: auto;" >
+          </div>
+          <div class="col-5 mt-3">
+            <h3><a class="{% url 'user-posts' object.author.username %}" data-content="{{ object.author.profile.bio }}"
+                title="{{ object.author }}" data-toggle="popover-hover" data-placement="right">{{ object.author }}</a>
+            </h3>
+            <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+          </div>
+          <div class="col-2">
+            {% if object.author == user %}
+            <div style="margin-top: 20px">
+              <a class="btn btn-secondary btn-sm mt-1 mb-1 btn btn-default" style="margin-bottom: 10px"
+                href="{% url 'post-update' object.id %}">Update</a>
+              <div style="clear: both;"></div>
+              <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}">Delete</a>
+            </div>
+            {% endif %}
+          </div>
+          <!-- </div> -->
+        </div>
+        <div style="text-align: center;">
+          <h2 class="titlefont">Summary</h2>
+        </div>
+        <div class="articleimge">
+          <p class="text-justify article-content titlefont">{{ object.summary }} </p>
+          <br>
+        </div>
+        <div class="articleimge" style="text-align: center;">
+          <img src="{{ object.article_img.url }}" class="img-responsive img-fluid img-thumnail" alt="Cinque Terre" width="80%"
+            height="auto">
+        </div>
+        <br>
+        <!-- actual post -->
+        <p class="text-justify article-content titlefont"> {{ object.content }} </p>
+      </div>
+      <div class="col-lg-1"></div>
+    </div>
+  </div>
+</article>
+{% endblock content %}

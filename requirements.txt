@@ -1,0 +1,5 @@
+pip install Django==2.1
+pip install django-crispy-forms
+pip install gensim==3.8.1
+python -m pip install Pillow
+pip install django-s3-sqlite
